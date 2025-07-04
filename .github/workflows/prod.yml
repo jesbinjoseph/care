@@ -16,7 +16,6 @@ concurrency:
 
 jobs:
   build:
-    if: github.repository == 'ohcnetwork/care'
     name: Build & Push
     runs-on: ubuntu-24.04
     steps:
