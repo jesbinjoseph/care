@@ -1,4 +1,4 @@
-name: Deploy Care
+name: Build Care Image
 
 on:
   workflow_dispatch:
@@ -14,10 +14,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     name: Build & Push
     runs-on: ubuntu-24.04
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
