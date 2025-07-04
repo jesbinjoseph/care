@@ -4,7 +4,7 @@ from plugs.plug import Plug
 abdm_plugin = Plug(
     name="abdm",
     package_name="git+https://github.com/10bedicu/care_abdm.git",
-    version="@data-migration-sync",
+    version="@abdm_emr",
     configs={}
 )
 
