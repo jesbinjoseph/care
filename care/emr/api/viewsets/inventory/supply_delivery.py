@@ -1,6 +1,5 @@
 from django.db import transaction
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -33,6 +32,7 @@ from care.emr.resources.inventory.supply_delivery.spec import (
 from care.security.authorization.base import AuthorizationController
 from care.utils.filters.dummy_filter import DummyBooleanFilter, DummyUUIDFilter
 from care.utils.filters.null_filter import NullFilter
+from care.utils.shortcuts import get_object_or_404
 
 
 class SupplyDeliveryFilters(filters.FilterSet):
@@ -71,6 +71,8 @@ class SupplyDeliveryViewSet(
 
     def validate_data(self, instance, model_obj=None):
         if not model_obj and instance.origin:
+            # TODO : Check if origin is part of the facility
+            # TODO : Check if the supplied inventory item is part of the origin or its children
             origin = get_object_or_404(FacilityLocation, external_id=instance.origin)
             if instance.supplied_inventory_item:
                 inventory_item = get_object_or_404(
@@ -90,7 +92,10 @@ class SupplyDeliveryViewSet(
             raise ValidationError("Insufficient stock")
 
     def perform_create(self, instance):
-        instance.status = SupplyDeliveryStatusOptions.in_progress.value
+        if instance.origin:
+            # When the delivery is from outside facility,
+            # all statuses are allowed to be updated by the recieving location
+            instance.status = SupplyDeliveryStatusOptions.in_progress.value
         if instance.supplied_item:
             instance.supplied_inventory_item = create_inventory_item(
                 instance.supplied_item, instance.destination
@@ -133,7 +138,7 @@ class SupplyDeliveryViewSet(
                     )
             super().perform_update(instance)
             self.sync_inventory_item(instance)
-            return instance
+        return instance
 
     def authorize_location_read(self, location):
         if not AuthorizationController.call(
