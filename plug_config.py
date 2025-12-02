@@ -1,14 +1,6 @@
 from plugs.manager import PlugManager
 from plugs.plug import Plug
 
-abdm_plugin = Plug(
-    name="abdm",
-    package_name="git+https://github.com/10bedicu/care_abdm.git",
-    version="@abdm_emr",
-    configs={}
-)
-
-
 gateway_device_plugin = Plug(
     name="gateway_device",
     package_name="git+https://github.com/10bedicu/care_teleicu_devices.git",
