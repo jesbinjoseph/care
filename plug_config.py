@@ -23,7 +23,6 @@ vitals_observation_device_plugin = Plug(
 )
 
 plugs = [
-    abdm_plugin,
     gateway_device_plugin,
     camera_device_plugin,
     vitals_observation_device_plugin
