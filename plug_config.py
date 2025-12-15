@@ -25,7 +25,7 @@ vitals_observation_device_plugin = Plug(
 scribe_plug = Plug(
     name="care_scribe",
     package_name="git+https://github.com/10bedicu/care_scribe.git",
-    version="@production",
+    version="@master",
     configs={}
 )
 
