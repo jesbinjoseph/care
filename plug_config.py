@@ -22,10 +22,19 @@ vitals_observation_device_plugin = Plug(
     configs={}
 )
 
+scribe_plug = Plug(
+    name="care_scribe",
+    package_name="git+https://github.com/10bedicu/care_scribe.git",
+    version="@production",
+    configs={}
+)
+
+
 plugs = [
     gateway_device_plugin,
     camera_device_plugin,
-    vitals_observation_device_plugin
+    vitals_observation_device_plugin,
+    scribe_plug
 ]
 
 manager = PlugManager(plugs)
