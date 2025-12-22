@@ -29,12 +29,19 @@ scribe_plug = Plug(
     configs={}
 )
 
+care_teleicu_plug = Plug(
+    name="care_teleicu",
+    package_name="git+https://github.com/ohcnetwork/care_teleicu.git",
+    version="@master",
+    configs={},
+)
 
 plugs = [
     gateway_device_plugin,
     camera_device_plugin,
     vitals_observation_device_plugin,
-    scribe_plug
+    scribe_plug,
+    care_teleicu_plug
 ]
 
 manager = PlugManager(plugs)
