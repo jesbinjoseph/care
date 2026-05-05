@@ -49,7 +49,7 @@ plugs = [
     vitals_observation_device_plugin,
     scribe_plug,
     care_teleicu_plug,
-    abdm
+    care_abdm_plug
 ]
 
 manager = PlugManager(plugs)
